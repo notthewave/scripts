@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# features
+# study-time=25m
+# short-break5m
+# long-break=30min
+
+study=true
+breaks=0
+sessions=0
+
+while [ $study = true ]
+do
+	notify-send "Let's do the work!"
+	sleep 25m
+	sessions=$((sessions+1))
+	echo $sessions
+	study=false
+	while [ $study = false ]
+	do
+		breaks=$((breaks+1))
+		if [ $breaks = 4 ]
+		then
+			notify-send "Well done 4 sessions!" "Take a walk"
+			sleep 30m
+			study=true
+			breaks=0
+		else
+			notify-send "Way to go!" "have a little 5 minute break"
+			sleep 5m
+			study=true
+		fi
+	done
+done
