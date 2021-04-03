@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# This Script provides a simpler (unlike mpsyt or youtube-viewer) dmenu-based interface for searching youtube
+# No ads no recomendations. Add them if you want. If youtubes site was simpler this would have been easy.
+#
+# Current problems:
+# Shows urls instead of videotitles
+# dmenu somtimes opens even if it shouldn't
+#
+# May features:
+# lbry support but only with rewards
+#
+# As of now basically useless..
+# case in
+# Gets a bunch of links for channels playlists and videos and pipes them into dmenuD
+
+mpv https://youtube.com"$(curl -s "https://www.youtube.com/results?search_query=$(printf "" | \
+	bemenu -p "Search:" | tr ' ' '+')&sp=EgIQAQ%253D%253D" | \
+	grep -Po '(?<=title":{"runs":\[{"text":")(.*?)(?=("}],"))|()(/watch\?v=.{11})' | \
+	sed '$!N;s/\n/ µ /g' | column -t -s "µ" | \
+	bemenu -l 7 | grep -Po "/watch\?v=.{11}")" || notify-send "Something went wrong..."
+
+#mpv https://youtube.com"$(curl -s "https://www.youtube.com/results?search_query=$(printf "" | \
+#	bemenu -p "Search:" | tr ' ' '+')&sp=EgIQAw%253D%253D" | \
+#	grep -Po '(/playlist\?list=.{34})' | \
+#	perl -ne '$seen{$_}++ or print;' | \
+#	bemenu -l 7)" && notify-send "Loading..."
+
+
+#mpv https://youtube.com"$(curl -s "https://www.youtube.com/results?search_query=$(printf "" | \
+#	bemenu -p "Search:" | tr ' ' '+')&sp=EgIQAQ%253D%253D" | \
+#	grep -Po '((/(channel/|user/).*?)(?=(","webPageType"|"}},|"}}}]},|"}}}]}}},)))' | \
+#	perl -ne '$seen{$_}++ or print;' | \
+#	bemenu -l 7)" && notify-send "Loading..."
+
+# get the urls of the channels videos and the title of the video
+#video=$(curl -s "https://www.youtube.com"$choice"/videos" | \
+#        grep -Po '(?<=videos-u")(.*?)(?=</a>)' | \
+#        dmenu -l 7 | grep -Po '(?<=href=")(.*?)(?=" rel)') &&
+#
+#        notify-send "Loading video..." "Please standby..." && mpv https://youtube.com"$video"
+#((/(channel/|user/).*?)(?=(","webPageType"|"}},|"}}}]},|"}}}]}}},)))
+#(/playlist\?list=.{34})
