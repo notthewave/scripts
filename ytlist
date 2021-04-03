@@ -3,10 +3,6 @@
 # This Script provides a simpler (unlike mpsyt or youtube-viewer) dmenu-based interface for searching youtube
 # No ads no recomendations. Add them if you want. If youtubes site was simpler this would have been easy.
 #
-# Current problems:
-# Shows urls instead of videotitles
-# dmenu somtimes opens even if it shouldn't
-#
 # May features:
 # lbry support but only with rewards
 #
